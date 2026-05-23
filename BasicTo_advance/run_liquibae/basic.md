@@ -1,7 +1,9 @@
-for intellige idea :
+## for intellige idea :
 select Maven project :
 
 <img width="1904" height="1015" alt="image" src="https://github.com/user-attachments/assets/dd6d6d1a-2ca4-4100-a89e-8c40982972be" />
+
+### setup 
 ```
 তোমার validate ছিল:
 
@@ -12,6 +14,7 @@ liquibase:validate -Pdev -Dliquibase.password=${env.DB_PASSWORD}
 liquibase:update -Pdev -Dliquibase.password=${env.DB_PASSWORD}
 ```
 -----------------for run powershell----------------------
+## for powersell
 ```
 PS D:\CBS_BULK_UPLOAD_DEV\liquibase-bulk> $env:DB_PASSWORD="SB5leEsp4"
 mvn liquibase:update "-Dliquibase.password=$env:DB_PASSWORD"
