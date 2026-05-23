@@ -104,3 +104,67 @@ mvn liquibase:update -Pdev "-Dliquibase.password=$env:DB_PASSWORD"
 👉 updateSQL = preview
 👉 update = apply\
 ```
+## Liquibase Rollback Strategy (Production Safe)
+```
+Liquibase এ rollback করার 2টা main approach আছে:
+
+1️⃣ TAG-BASED ROLLBACK (BEST PRACTICE ⭐)
+
+👉 এটা সবচেয়ে safe এবং production standard
+
+🏷️ Step 1: Before deployment tag দাও
+mvn liquibase:tag -Dliquibase.tag=v1.0.0 -Pprod "-Dliquibase.password=$env:DB_PASSWORD"
+
+👉 মানে: এই point কে “safe restore point” হিসেবে mark করা হলো
+
+🚀 Step 2: New release deploy করো
+mvn liquibase:update -Pprod "-Dliquibase.password=$env:DB_PASSWORD"
+💥 Step 3: সমস্যা হলে rollback to tag
+mvn liquibase:rollback -Dliquibase.tag=v1.0.0 -Pprod "-Dliquibase.password=$env:DB_PASSWORD"
+✔ What happens:
+DB আগের safe state এ ফিরে যাবে
+latest changeset rollback হবে
+DATABASECHANGELOG update হবে
+2️⃣ COUNT-BASED ROLLBACK (Emergency quick fix)
+
+👉 যখন tag নেই বা দ্রুত rollback দরকার
+
+🔄 Example: last 2 changes rollback
+mvn liquibase:rollbackCount -Dliquibase.rollbackCount=2 -Pprod "-Dliquibase.password=$env:DB_PASSWORD"
+✔ Use case:
+last deployment broken
+quick recovery needed
+no tagging available
+3️⃣ DATE-BASED ROLLBACK (rare use)
+mvn liquibase:rollbackToDate -Dliquibase.rollbackToDate="2026-05-20T10:00:00" -Pprod "-Dliquibase.password=$env:DB_PASSWORD"
+🚨 Production Best Strategy (REAL WORLD)
+1. tag release (v1.0.0)
+2. deploy update
+3. monitor
+4. if issue → rollback to tag
+🧠 Why TAG rollback is BEST?
+
+✔ precise control
+✔ safe restore point
+✔ audit-friendly
+✔ no guessing (unlike rollbackCount)
+
+⚠️ Important Notes
+rollback works only if:
+changeset has rollback logic OR
+Liquibase can auto-generate rollback
+Always test rollback in DEV first
+🔥 Pro Production Pattern
+# 1. Tag before release
+mvn liquibase:tag -Dliquibase.tag=release_2026_05_23_v1 -Pprod
+
+# 2. Deploy
+mvn liquibase:update -Pprod
+
+# 3. Emergency rollback
+mvn liquibase:rollback -Dliquibase.tag=release_2026_05_23_v1 -Pprod
+🚀 Summary
+
+👉 tag rollback = safest (recommended)
+👉 rollbackCount = quick emergency fix
+👉 rollbackToDate = time-based recovery
