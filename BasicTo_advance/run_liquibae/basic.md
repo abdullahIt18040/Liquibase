@@ -10,3 +10,9 @@ liquibase:validate -Pdev -Dliquibase.password=${env.DB_PASSWORD}
 👉 এখন update হবে:
 
 liquibase:update -Pdev -Dliquibase.password=${env.DB_PASSWORD}
+-----------------for run powershell----------------------
+PS D:\CBS_BULK_UPLOAD_DEV\liquibase-bulk> $env:DB_PASSWORD="SB5leEsp4"
+mvn liquibase:update "-Dliquibase.password=$env:DB_PASSWORD"
+BEST PRACTICE (more stable)
+Option A — one line (clean)
+$env:DB_PASSWORD="SB5leEsp4"; mvn liquibase:update "-Dliquibase.password=$env:DB_PASSWORD"
