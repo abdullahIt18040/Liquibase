@@ -39,3 +39,15 @@ mvn liquibase:update "-Dliquibase.password=$env:DB_PASSWORD"
 Option A — one line (clean)
 $env:DB_PASSWORD="SB5leEsp4"; mvn liquibase:update "-Dliquibase.password=$env:DB_PASSWORD"
 ```
+### One-line PowerShell safe workflow example
+```
+$env:DB_PASSWORD="SB5leEsp4";
+mvn liquibase:validate -Pdev "-Dliquibase.password=$env:DB_PASSWORD";
+mvn liquibase:updateSQL -Pdev "-Dliquibase.password=$env:DB_PASSWORD";
+mvn liquibase:update -Pdev "-Dliquibase.password=$env:DB_PASSWORD"
+📊 Summary
+
+👉 validate = check
+👉 updateSQL = preview
+👉 update = apply\
+```
