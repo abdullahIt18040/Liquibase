@@ -154,7 +154,9 @@ rollback works only if:
 changeset has rollback logic OR
 Liquibase can auto-generate rollback
 Always test rollback in DEV first
-🔥 Pro Production Pattern
+```
+##  🔥 Pro Production Pattern
+```
 # 1. Tag before release
 mvn liquibase:tag -Dliquibase.tag=release_2026_05_23_v1 -Pprod
 
@@ -164,6 +166,7 @@ mvn liquibase:update -Pprod
 # 3. Emergency rollback
 mvn liquibase:rollback -Dliquibase.tag=release_2026_05_23_v1 -Pprod
 🚀 Summary
+```
 
 👉 tag rollback = safest (recommended)
 👉 rollbackCount = quick emergency fix
