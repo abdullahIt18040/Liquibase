@@ -158,13 +158,13 @@ Always test rollback in DEV first
 ##  🔥 Pro Production Pattern
 ```
 # 1. Tag before release
-mvn liquibase:tag -Dliquibase.tag=release_2026_05_23_v1 -Pprod
+mvn liquibase:tag -Dliquibase.tag=release_2026_05_23_v1.0.0 -Pprod
 
 # 2. Deploy
 mvn liquibase:update -Pprod
 
 # 3. Emergency rollback
-mvn liquibase:rollback -Dliquibase.tag=release_2026_05_23_v1 -Pprod
+mvn liquibase:rollback -Dliquibase.tag=release_2026_05_23_v1.0.0 -Pprod
 🚀 Summary
 ```
 
