@@ -164,10 +164,16 @@ $env:DB_PASSWORD="SB5leEsp4"
 mvn liquibase:tag -Pdev "-Dliquibase.tag=dev_release_2026_05_23_v1_0_0" "-Dliquibase.password=$env:DB_PASSWORD"
 
 # 2. Deploy
-mvn liquibase:update -Pprod
+$env:DB_PASSWORD="SB5leEsp4";
+mvn liquibase:validate -Pdev "-Dliquibase.password=$env:DB_PASSWORD";
+mvn liquibase:updateSQL -Pdev "-Dliquibase.password=$env:DB_PASSWORD";
+mvn liquibase:update -Pdev "-Dliquibase.password=$env:DB_PASSWORD"
 
 # 3. Emergency rollback
-mvn liquibase:rollback -Dliquibase.tag=release_2026_05_23_v1.0.0 -Pprod
+
+$env:DB_PASSWORD="SB5leEsp4"
+
+mvn liquibase:rollback -Pdev "-Dliquibase.rollbackTag=dev_release_2026_05_23_v1_0_0" "-Dliquibase.password=$env:DB_PASSWORD"
 🚀 Summary
 ```
 
