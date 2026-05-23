@@ -158,7 +158,10 @@ Always test rollback in DEV first
 ##  🔥 Pro Production Pattern
 ```
 # 1. Tag before release
-mvn liquibase:tag -Dliquibase.tag=release_2026_05_23_v1.0.0 -Pprod
+
+$env:DB_PASSWORD="SB5leEsp4"
+
+mvn liquibase:tag -Pdev "-Dliquibase.tag=dev_release_2026_05_23_v1_0_0" "-Dliquibase.password=$env:DB_PASSWORD"
 
 # 2. Deploy
 mvn liquibase:update -Pprod
